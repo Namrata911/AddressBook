@@ -6,6 +6,7 @@ import com.book.addressbook.entity.AddressBook;
 import com.book.addressbook.entity.BookEntry;
 import com.book.addressbook.service.AddressBookService;
 import com.book.addressbook.service.BookEntryService;
+import com.book.addressbook.validation.AllowedValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,14 +49,6 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.CREATED).body(book.getId());
     }
 
-    // add entry to book - returns the book object when done
-    @PostMapping("/{bookId}/entry")
-    public ResponseEntity<Response> addEntryToBook(@PathVariable int bookId, @RequestBody @Valid EntryDto dto){
-        AddressBook book = bookService.addEntryToBook(bookId,dto);
-        Response response = new Response("OK",book);
-        return ResponseEntity.ok().body(response);
-    }
-
     // Delete a book by id
     @DeleteMapping("/{bookId}")
     public ResponseEntity<Response> deleteBookById(int bookId){
@@ -63,10 +56,4 @@ public class AddressController {
         Response response = new Response("OK",null);
         return ResponseEntity.ok().body(response);
     }
-
-    @PatchMapping("/{bookId}")
-    public ResponseEntity<Response> updateName(){
-    return null;
-    }
-
 }

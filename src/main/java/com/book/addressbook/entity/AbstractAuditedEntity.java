@@ -1,5 +1,6 @@
 package com.book.addressbook.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,13 +19,16 @@ public abstract class AbstractAuditedEntity implements Serializable {
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
+    @JsonIgnore
     private Instant createdDate;
 
     @Column(nullable = false)
     @LastModifiedDate
+    @JsonIgnore
     private Instant modifiedDate;
 
     @CreatedBy
+    @JsonIgnore
     private String createdBy;
 
 }

@@ -3,10 +3,7 @@ package com.book.addressbook.entity;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -17,7 +14,10 @@ public class BookEntry extends AbstractAuditedEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(updatable = false)
     private String firstName;
+
+    @Column(updatable = false)
     private String lastName;
     private String address;
     private String city;

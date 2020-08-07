@@ -9,7 +9,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface EntryMapper {
 
-    EntryMapper INSTANCE = Mappers.getMapper( EntryMapper.class );
     EntryDto entityToDto (BookEntry entry);
     BookEntry dtoToEntity (EntryDto dto);
 }

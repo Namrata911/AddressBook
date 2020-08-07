@@ -24,6 +24,7 @@ public class AddressBook extends AbstractAuditedEntity{
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="book_id")
     private List<BookEntry> entryList;
 
     public AddressBook(){

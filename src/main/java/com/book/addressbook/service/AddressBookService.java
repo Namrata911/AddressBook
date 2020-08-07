@@ -10,9 +10,13 @@ import lombok.extern.log4j.Log4j2;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,32 +27,32 @@ public class AddressBookService {
     @Autowired
     AddressBookRepository bookRepository;
 
-    public AddressBook createNewBook(String bookName){
+    public AddressBook createNewBook(String bookName) {
         AddressBook book = new AddressBook();
         book.setName(bookName);
-        book =  bookRepository.save(book);
+        book = bookRepository.save(book);
         log.debug("created book: {}", book);
         return book;
     }
 
-    public AddressBook addEntryToBook(int bookId, EntryDto dto){
+    public AddressBook addEntryToBook(int bookId, EntryDto dto) {
         EntryMapper mapper = Mappers.getMapper(EntryMapper.class);
         BookEntry entry = mapper.dtoToEntity(dto);
         Optional<AddressBook> optBook = bookRepository.findById(bookId);
-        if(optBook.isPresent()){
+        if (optBook.isPresent()) {
             AddressBook book = optBook.get();
             book.addEntry(entry);
             return bookRepository.save(book);
-        }else {
+        } else {
             throw new NotFoundException(String.format("Book Id {} Not Found", bookId));
         }
     }
 
-    public AddressBook getBookById(int bookId){
+    public AddressBook getBookById(int bookId) {
         Optional<AddressBook> book = bookRepository.findById(bookId);
-        if(book.isPresent()){
+        if (book.isPresent()) {
             return book.get();
-        }else{
+        } else {
             throw new NotFoundException(String.format("Book id {} Not Found", bookId));
         }
     }
@@ -57,7 +61,15 @@ public class AddressBookService {
         return (List) bookRepository.findAll();
     }
 
+//    public List<AddressBook> getAllBooks(String sortBy, int pageNum, int pageSize) {
+//            PageRequest pageRequest = PageRequest.of(pageNum, pageSize, Sort.by(sortBy));
+//            Page<AddressBook> page = bookRepository.findAll(pageRequest);
+//            return page.getContent();
+//    }
+
     public void deleteBook(int bookId) {
         bookRepository.deleteById(bookId);
     }
 }
+
+
