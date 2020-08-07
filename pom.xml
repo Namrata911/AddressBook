@@ -89,6 +89,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<defaultGoal>install spring-boot:run</defaultGoal>
 	</build>
 
 </project>
